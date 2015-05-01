@@ -5,12 +5,12 @@ require 'pry-debugger'
 require_relative 'scale_dimensions'
 
 get '/json' do
-  content_type :json
-  results = Dimensions.scale(params['image_dimensions'],params['bounding_box'])
-  if results
+  results = Dimensions.scale(params['image_dimensions'],params['bounding_box'])  
+  if results.class == Hash
+    content_type :json
     results.to_json
   else
-    instructions
+    "Error: #{results.to_s} <br> #{instructions}"
   end
 end
 
