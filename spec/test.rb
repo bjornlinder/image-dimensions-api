@@ -1,16 +1,26 @@
-require File.expand_path '../test_helper.rb', __FILE__
+require_relative 'test_helper.rb'
 
-class MyTests < MiniTest::Unit::TestCase
+include Rack::Test::Methods
 
-  include Rack::Test::Methods
+def app
+  Sinatra::Application
+end
 
-  def app
-    Sinatra::Application
-  end
+def instructions
+  "API format: /json?image_dimensions=400,200,600,800,900,100&bounding_box=200,200"
+end
 
-  def test_index
+describe 'root path' do
+  it 'returns instructions for the api' do
     get '/'
     assert last_response.ok?
-    assert_equal "API format: /json?image_dimensions=400,200,600,800,900,100&bounding_box=200,200", last_response.body
+    assert_equal instructions, last_response.body
+  end
+end
+
+describe 'json api' do
+  it 'should return instructions if params don\'t match' do
+    get '/json'
+    assert_equal instructions, last_response.body
   end
 end
