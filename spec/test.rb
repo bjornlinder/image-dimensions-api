@@ -20,7 +20,10 @@ end
 
 describe 'json api' do
   it 'should return instructions if params don\'t match' do
-    get '/json'
+    get 'json'
     assert_equal instructions, last_response.body
+  end
+  it 'should return scaled dimensions if request is good' do
+    
   end
 end

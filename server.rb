@@ -1,13 +1,23 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'json'
+require 'pry-debugger'
+require_relative 'scale_dimensions'
 
 get '/json' do
   content_type :json
-  
-  {'wine'=>'cheese'}.to_json
+  results = Dimensions.scale(params['image_dimensions'],params['bounding_box'])
+  if results
+    results
+  else
+    instructions
+  end
 end
 
 get '/' do
+  instructions
+end
+
+def instructions
   "API format: /json?image_dimensions=400,200,600,800,900,100&bounding_box=200,200"
 end
