@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'json'
-require 'pry-debugger'
 require_relative 'scale_dimensions'
 
 get '/json' do
