@@ -1,5 +1,4 @@
 require 'sinatra'
-require 'sinatra/activerecord'
 require 'json'
 require_relative 'scale_dimensions'
 
