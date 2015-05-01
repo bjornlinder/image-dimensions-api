@@ -31,7 +31,15 @@ describe 'testing json api' do
        'expected-response'=>{
           'scaled_dimensions'=>[200,100],
           'bounding_box'=>[200,200]}
-      }]
+      },
+      {'request'=>{
+          'image_dimensions'=>'1256,1200,600,800,200,200,400,200,800,1256',
+          'bounding_box'=>'200,200'},
+       'expected-response'=>{
+          'scaled_dimensions'=>[200, 191, 150, 200, 200, 200, 200, 100, 127, 200],
+          'bounding_box'=>[200,200]}
+      }
+    ]
   end
   it 'should return scaled dimensions if request is good' do
     @queries.each do |q|

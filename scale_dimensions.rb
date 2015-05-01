@@ -54,6 +54,6 @@ class Dimensions
   end
   
   def self.format_num(x)
-    x % 1 == 0 ? x.to_i : x.round(2)
+    x.to_i
   end
 end
