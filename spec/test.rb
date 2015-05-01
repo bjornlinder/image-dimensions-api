@@ -18,27 +18,29 @@ describe 'root path' do
   end
 end
 
-describe 'json api' do
+describe 'testing json api' do
   it 'should return instructions if params don\'t match' do
     get 'json'
     assert_equal instructions, last_response.body
   end
-  context 'testing api params' do
-    queries = [
+  before do
+    @queries = [
       {'request'=>{
           'image_dimensions'=>'400,200',
           'bounding_box'=>'200,200'},
        'expected-response'=>{
           'scaled_dimensions'=> '200,100',
-          'scaled_dimensions'=>'200,100'}
+          'bounding_box'=>'200,200'}
       }]
-    dimensions = '400,200' "json?image_dimensions=#{dimensions}&bounding_box=200,200'
-    request = "json?image_dimensions=#{dimensions}&bounding_box=200,200"
-    it 'should return scaled dimensions if request is good' do
-      queries.each do |q|
-        dimensions = query['request']['image_dimensions']
-      get request
-      assert_equal query['expected-response'], last_response.body
+    @dimensions=''
+    @api_request = "json?image_dimensions=#{@dimensions}&bounding_box=200,200"
+  end
+  it 'should return scaled dimensions if request is good' do
+    @queries.each do |q|
+      @dimensions = q['request']['image_dimensions']
+      # binding.pry
+      get @api_request
+      assert_equal q['expected-response'], last_response.body
     end
   end
 end
