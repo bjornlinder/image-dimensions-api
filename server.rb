@@ -8,7 +8,7 @@ get '/json' do
   content_type :json
   results = Dimensions.scale(params['image_dimensions'],params['bounding_box'])
   if results
-    results
+    results.to_json
   else
     instructions
   end

@@ -1,5 +1,5 @@
 require_relative 'test_helper.rb'
-
+require 'json'
 include Rack::Test::Methods
 
 def app
@@ -29,18 +29,16 @@ describe 'testing json api' do
           'image_dimensions'=>'400,200',
           'bounding_box'=>'200,200'},
        'expected-response'=>{
-          'scaled_dimensions'=> '200,100',
-          'bounding_box'=>'200,200'}
+          'scaled_dimensions'=>[200,100],
+          'bounding_box'=>[200,200]}
       }]
-    @dimensions=''
-    @api_request = "json?image_dimensions=#{@dimensions}&bounding_box=200,200"
   end
   it 'should return scaled dimensions if request is good' do
     @queries.each do |q|
-      @dimensions = q['request']['image_dimensions']
-      # binding.pry
+      dimensions = q['request']['image_dimensions']
+      @api_request = "json?image_dimensions=#{dimensions}&bounding_box=200,200"
       get @api_request
-      assert_equal q['expected-response'], last_response.body
+      assert_equal q['expected-response'].to_json, last_response.body
     end
   end
 end
