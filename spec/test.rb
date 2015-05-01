@@ -23,7 +23,22 @@ describe 'json api' do
     get 'json'
     assert_equal instructions, last_response.body
   end
-  it 'should return scaled dimensions if request is good' do
-    
+  context 'testing api params' do
+    queries = [
+      {'request'=>{
+          'image_dimensions'=>'400,200',
+          'bounding_box'=>'200,200'},
+       'expected-response'=>{
+          'scaled_dimensions'=> '200,100',
+          'scaled_dimensions'=>'200,100'}
+      }]
+    dimensions = '400,200' "json?image_dimensions=#{dimensions}&bounding_box=200,200'
+    request = "json?image_dimensions=#{dimensions}&bounding_box=200,200"
+    it 'should return scaled dimensions if request is good' do
+      queries.each do |q|
+        dimensions = query['request']['image_dimensions']
+      get request
+      assert_equal query['expected-response'], last_response.body
+    end
   end
 end
